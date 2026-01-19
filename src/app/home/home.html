@@ -1,3 +1,79 @@
-<div>
-  <a routerLink="/example1">Signal Forms - Example 1</a>
+<div class="min-h-screen bg-[#0d1117] text-white font-['Inter_Tight',sans-serif]">
+  <!-- Header (max-width: 1280px) -->
+  <header class="border-b border-[#21262d]">
+    <div class="max-w-7xl mx-auto p-6">
+      <div class="flex items-center">
+        <h1
+          class="bg-clip-text text-transparent bg-linear-to-r from-[#F60C4C] to-[#BE26E7] text-3xl leading-tight font-bold">
+          Signal Forms in Practice
+        </h1>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-6 py-16">
+    <!-- Intro Section (max-width: 768px) -->
+    <div class="mb-16">
+      <h2 class="mb-6 text-5xl leading-tight font-bold">
+        Poznaj <span class="bg-clip-text text-transparent bg-linear-to-r from-[#FF31CE] to-[#EB0F24]">Signal
+          Forms</span>
+      </h2>
+      <p class="max-w-3xl text-xl text-[#8b949e] leading-relaxed">
+        Seria praktycznych przykładów pokazujących jak wykorzystać najnowsze możliwości Angular Signals
+        w formularzach reaktywnych. Od podstaw do zaawansowanych wzorców.
+      </p>
+    </div>
+
+    <!-- Examples Grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+      @for (example of examples; track example.id) {
+      <a [routerLink]="`/example${example.id}`"
+        class="group relative p-6 border border-[#30363d] rounded-lg hover:border-[white] bg-[#161b22] hover:shadow-lg hover:shadow-[#EB0F2420] transition-all duration-300 ease-out">
+
+        <!-- Example Number Badge -->
+        <div
+          class="absolute top-4 right-4 flex items-center justify-center w-8 h-8 rounded-full bg-[#FF31CE] text-sm font-bold">
+          {{ example.id }}
+        </div>
+
+        <!-- Content -->
+        <div class="mb-4">
+          <h3 class="mb-2 text-lg font-semibold group-hover:text-[#FF31CE] transition-colors">
+            {{ example.title }}
+          </h3>
+          <p class="text-sm text-[#8b949e] leading-relaxed">
+            {{ example.description }}
+          </p>
+        </div>
+
+        <!-- Arrow Icon -->
+        <div class="flex items-center gap-2 text-[#8b949e] group-hover:text-[#F60C4C] transition-colors">
+          <span class="text-sm font-medium">Przejdź do przykładu</span>
+          <svg class="relative top-px w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none"
+            stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </div>
+      </a>
+      }
+    </div>
+
+    <!-- Footer Info -->
+    <div class="mt-16 p-6 bg-[#161b22] border border-[#30363d] rounded-lg">
+      <div class="flex items-start gap-4">
+        <svg class="shrink-0 w-6 h-6 mt-1 text-[#58a6ff]" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd"
+            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+            clip-rule="evenodd" />
+        </svg>
+        <div>
+          <h4 class="mb-2 text-[#58a6ff] font-semibold">O aplikacji</h4>
+          <p class="text-[#8b949e] leading-relaxed">
+            Ta aplikacja ćwiczeniowa została stworzona w celu nauki i eksploracji Signal Forms w Angular.
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
 </div>
