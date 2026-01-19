@@ -1,0 +1,21 @@
+<div class="min-h-screen px-5 py-15 bg-[#0d1117] text-white">
+  <mat-card appearance="outlined" class="max-w-xl mx-auto p-5 bg-[#445469]!">
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label for="firstName">First name</mat-label>
+      <input [formField]="userForm.firstName" id="firstName" matInput type="text" placeholder="First name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="w-full">
+      <mat-label for="email">Email address</mat-label>
+      <input id="email" type="email" matInput [formField]="userForm.email" placeholder="Email" />
+
+      @if(userForm.email().errors().length > 0) {
+      <mat-error>
+        @for(error of userForm.email().errors(); track error) {
+        <span>{{ error.message }}</span>
+        }
+      </mat-error>
+      }
+    </mat-form-field>
+  </mat-card>
+</div>
