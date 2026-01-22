@@ -1,0 +1,14 @@
+.entering {
+  animation: fadeInUp 0.4s ease-in-out both;
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

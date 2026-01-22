@@ -27,9 +27,10 @@
 
     <!-- Examples Grid -->
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-      @for (example of examples; track example.id) {
+      @for (example of examples; track example.id; ; let i = $index) {
       <a [routerLink]="`/example${example.id}`"
-        class="group relative p-6 border border-[#30363d] rounded-lg hover:border-[white] bg-[#161b22] hover:shadow-lg hover:shadow-[#EB0F2420] transition-all duration-300 ease-out">
+        class="group relative p-6 border border-[#30363d] rounded-lg hover:border-[white] bg-[#161b22] hover:shadow-lg hover:shadow-[#EB0F2420] transition-all duration-300 ease-out"
+        animate.enter="entering" [style.animation-delay.ms]="i * 100">
 
         <!-- Example Number Badge -->
         <div
