@@ -3,6 +3,7 @@ import { form, FormField, required, email } from '@angular/forms/signals';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
+import { RouterLink } from "@angular/router";
 
 type UserProfile = {
   firstName: string;
@@ -13,7 +14,7 @@ type UserProfile = {
 
 @Component({
   selector: 'app-example1',
-  imports: [MatFormFieldModule, MatInputModule, MatCardModule, FormField],
+  imports: [MatFormFieldModule, MatInputModule, MatCardModule, FormField, RouterLink],
   templateUrl: './example1.html',
   styleUrl: './example1.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
