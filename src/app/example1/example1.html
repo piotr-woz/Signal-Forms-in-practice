@@ -36,6 +36,11 @@
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="w-full">
+        <mat-label for="lastName">Last name</mat-label>
+        <input [formField]="userForm.lastName" id="lastName" matInput type="text" placeholder="Last name" />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="w-full">
         <mat-label for="email">Email address</mat-label>
         <input [formField]="userForm.email" id="email" type="email" matInput placeholder="Email" />
 
