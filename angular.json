@@ -40,12 +40,18 @@
                   "maximumError": "8kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "security": {
+                "autoCsp": true
+              }
             },
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "security": {
+                "autoCsp": true
+              }
             }
           },
           "defaultConfiguration": "production"
