@@ -8,6 +8,7 @@ import {
   schema,
   minLength,
   apply,
+  validate,
 } from '@angular/forms/signals';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -41,9 +42,25 @@ export default class Example1 {
     minLength(path, 3, { message: 'This needs to be more than three characters' });
   });
 
+  private numericOnly(path: any, options?: { message?: string }): void {
+    validate(path, (ctx) => {
+      const value = ctx.value();
+
+      if (!/^\d+$/.test(String(value))) {
+        return {
+          kind: 'phone',
+          value: true,
+          message: options?.message || 'The phone must contain only numbers.',
+        };
+      }
+      return null;
+    });
+  }
+
   protected readonly userForm = form(this._userProfile, (path) => {
-    (apply(path.firstName, this._profileSchema),
-      apply(path.lastName, this._profileSchema),
-      email(path.email, { message: 'The email address is not valid.' }));
+    ((apply(path.firstName, this._profileSchema),
+    apply(path.lastName, this._profileSchema),
+    email(path.email, { message: 'The email address is not valid.' })),
+      this.numericOnly(path.phone, { message: 'The phone number must contain only numbers.' }));
   });
 }
