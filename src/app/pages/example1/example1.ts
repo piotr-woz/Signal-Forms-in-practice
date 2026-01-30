@@ -17,6 +17,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButton } from '@angular/material/button';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { RouterLink } from '@angular/router';
+import { Header } from '../../shared/components/header/header';
 
 interface UserProfile {
   firstName: string;
@@ -38,6 +39,7 @@ interface UserProfile {
     MatCheckbox,
     FormField,
     RouterLink,
+    Header,
   ],
   templateUrl: './example1.html',
   styleUrl: './example1.css',
@@ -100,7 +102,7 @@ export default class Example1 {
       }));
   });
 
-  onSubmit() {
+  protected onSubmit() {
     // event.preventDefault();
     submit(this.userForm, async () => {
       try {
@@ -119,7 +121,7 @@ export default class Example1 {
     });
   }
 
-  // onSubmit() {
+  // protected onSubmit() {
   //   submit(this.userForm, async (form) => {
   //     try {
   //       this.userProfileService.saveForm(form); // call to API to save our form data
