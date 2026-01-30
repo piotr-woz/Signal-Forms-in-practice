@@ -80,6 +80,8 @@
           }
         </mat-form-field>
 
+        <mat-checkbox [formField]="userForm.emailMarketing" type="checkbox">Email Marketing</mat-checkbox>
+
         <div class="flex justify-end">
           <button matButton="tonal" class="mt-4" type="submit" [disabled]="!isFormValid()">
             Submit
