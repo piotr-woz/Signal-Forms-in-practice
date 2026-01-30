@@ -60,13 +60,11 @@ export default class Example1 {
   });
 
   private numericOnly(path: any, options?: { message?: string }): void {
-    validate(path, (input) => {
-      const value = input.value();
-
+    validate(path, ({ value }) => {
       if (!/^\d+$/.test(String(value))) {
         return {
-          kind: 'phone',
           message: options?.message || 'This input must contain only numbers.',
+          kind: 'phone',
         };
       }
       return null;
@@ -76,12 +74,21 @@ export default class Example1 {
   protected readonly userForm = form(this._userProfile, (path) => {
     (apply(path.firstName, this._profileSchema),
       apply(path.lastName, this._profileSchema),
+      // Phone number must contain only numbers
       this.numericOnly(path.phone, { message: 'The phone number must contain only numbers.' }),
+      // Email is required only if email marketing is checked
       required(path.email, {
         when: ({ valueOf }) => valueOf(path.emailMarketing) === true,
         message: 'This is a required field.',
       }),
       email(path.email, { message: 'The email address is not valid.' }));
+
+    validate(path.password, ({ value }) => {
+      if (!/\d/.test(String(value))) {
+        return { message: 'Password must contain at least one number.', kind: 'password' };
+      }
+      return null;
+    });
   });
 
   onSubmit() {
