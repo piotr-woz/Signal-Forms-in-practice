@@ -13,37 +13,18 @@ export default class Home {
     {
       id: 1,
       title: 'Basic Signal Form 1',
-      description: 'Podstawowa implementacja z signal inputs',
+      description:
+        'Basic implementation with Angular Material, featuring built-in and custom validation.',
     },
     {
       id: 2,
       title: 'Basic Signal Form 2',
-      description: 'Podstawowa implementacja z signal inputs',
+      description: 'Basic implementation with Signal inputs.',
     },
-    // {
-    //   id: 3,
-    //   title: 'Nested Form Groups',
-    //   description: 'Zagnieżdżone grupy formularzy',
-    // },
-    // {
-    //   id: 4,
-    //   title: 'Dynamic Form Arrays',
-    //   description: 'Dynamiczne tablice kontrolek',
-    // },
-    // {
-    //   id: 5,
-    //   title: 'Custom Validators',
-    //   description: 'Własne walidatory z signals',
-    // },
-    // {
-    //   id: 6,
-    //   title: 'Async Operations',
-    //   description: 'Asynchroniczne operacje i walidacja',
-    // },
-    // {
-    //   id: 7,
-    //   title: 'Form State Management',
-    //   description: 'Zarządzanie stanem formularza',
-    // },
+    {
+      id: 3,
+      title: 'Basic Signal Form 3',
+      description: 'Basic implementation with Signal inputs.',
+    },
   ];
 }
