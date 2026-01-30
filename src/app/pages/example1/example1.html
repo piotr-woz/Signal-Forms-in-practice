@@ -68,7 +68,7 @@
           }
         </mat-form-field>
 
-        <mat-form-field appearance="fill" class="w-full">
+        <mat-form-field appearance="fill" class="w-full mb-1">
           <mat-label for="email">Email address</mat-label>
           <input [formField]="userForm.email" id="email" matInput type="email" placeholder="Email" />
           @if(userForm.email().errors().length > 0) {
@@ -81,6 +81,31 @@
         </mat-form-field>
 
         <mat-checkbox [formField]="userForm.emailMarketing" type="checkbox">Email Marketing</mat-checkbox>
+
+        <mat-form-field appearance="fill" class="w-full mb-1 mt-2">
+          <mat-label for="password">Password</mat-label>
+          <input [formField]="userForm.password" id="password" matInput type="password" placeholder="Password" />
+          @if(userForm.password().errors().length > 0) {
+          <mat-error>
+            @for(error of userForm.password().errors(); track error) {
+            <span>{{ error.message }}</span>
+            }
+          </mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="w-full mb-1">
+          <mat-label for="confirmPassword">Confirm Password</mat-label>
+          <input [formField]="userForm.confirmPassword" id="confirmPassword" matInput type="password"
+            placeholder="Confirm Password" />
+          @if(userForm.confirmPassword().errors().length > 0) {
+          <mat-error>
+            @for(error of userForm.confirmPassword().errors(); track error) {
+            <span>{{ error.message }}</span>
+            }
+          </mat-error>
+          }
+        </mat-form-field>
 
         <div class="flex justify-end">
           <button matButton="tonal" class="mt-4" type="submit"
