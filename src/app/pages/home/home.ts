@@ -1,11 +1,27 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { DataService } from '../../shared/services/data.service';
 
 @Component({
   selector: 'app-home',
   imports: [RouterLink],
   templateUrl: './home.html',
-  styleUrl: './home.css',
+  styles: `
+    .entering {
+      animation: fadeInUp 0.4s ease-in-out both;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class Home {
@@ -15,16 +31,25 @@ export default class Home {
       title: 'Basic Signal Form 1',
       description:
         'Basic implementation with Angular Material, featuring built-in and custom validation.',
+      origin: 'https://www.angularspace.com/signal-forms/',
     },
     {
       id: 2,
       title: 'Basic Signal Form 2',
       description: 'Basic implementation with Signal inputs.',
+      origin: '',
     },
     {
       id: 3,
       title: 'Basic Signal Form 3',
       description: 'Basic implementation with Signal inputs.',
+      origin: '',
     },
   ];
+
+  private _dataService = inject(DataService);
+
+  protected onSendExampleData(title: string, origin: string): void {
+    this._dataService.setPageData(title, origin);
+  }
 }

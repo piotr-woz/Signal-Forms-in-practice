@@ -1,13 +1,17 @@
-import { Component, input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-header',
   imports: [RouterLink],
   templateUrl: './header.html',
-  styleUrl: './header.css',
+  styles: ``,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Header {
-  public readonly pageTitle = input.required<string>();
-  public readonly sourceLink = input.required<string>();
+  private _dataService = inject(DataService);
+
+  protected readonly pageTitle = this._dataService.pageTitle;
+  protected readonly originLink = this._dataService.originLink;
 }

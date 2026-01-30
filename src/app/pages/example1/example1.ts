@@ -42,7 +42,7 @@ interface UserProfile {
     Header,
   ],
   templateUrl: './example1.html',
-  styleUrl: './example1.css',
+  styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class Example1 {
