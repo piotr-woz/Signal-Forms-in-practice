@@ -31,7 +31,7 @@
 
   <div class="px-6 pt-26 pb-8">
     <mat-card appearance="outlined" class="relative z-10 max-w-xl mx-auto p-8 bg-[#445469]!">
-      <form>
+      <form (submit)="onSubmit()">
         <mat-form-field appearance="fill" class="w-full mb-1">
           <mat-label for="firstName">First name</mat-label>
           <input [formField]="userForm.firstName" id="firstName" matInput type="text" placeholder="First name" />
@@ -83,7 +83,8 @@
         <mat-checkbox [formField]="userForm.emailMarketing" type="checkbox">Email Marketing</mat-checkbox>
 
         <div class="flex justify-end">
-          <button matButton="tonal" class="mt-4" type="submit" [disabled]="!isFormValid()">
+          <button matButton="tonal" class="mt-4" type="submit"
+            [disabled]="userForm().invalid() || userForm().submitting()">
             Submit
           </button>
         </div>

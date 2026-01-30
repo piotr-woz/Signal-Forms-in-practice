@@ -9,6 +9,7 @@ import {
   minLength,
   apply,
   validate,
+  submit,
 } from '@angular/forms/signals';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -75,9 +76,7 @@ export default class Example1 {
   protected readonly userForm = form(this._userProfile, (path) => {
     (apply(path.firstName, this._profileSchema),
       apply(path.lastName, this._profileSchema),
-
       this.numericOnly(path.phone, { message: 'The phone number must contain only numbers.' }),
-
       required(path.email, {
         when: ({ valueOf }) => valueOf(path.emailMarketing) === true,
         message: 'This is a required field.',
@@ -85,11 +84,31 @@ export default class Example1 {
       email(path.email, { message: 'The email address is not valid.' }));
   });
 
-  protected readonly isFormValid = computed(
-    () =>
-      this.userForm.firstName().errors().length === 0 &&
-      this.userForm.lastName().errors().length === 0 &&
-      this.userForm.phone().errors().length === 0 &&
-      this.userForm.email().errors().length === 0,
-  );
+  onSubmit() {
+    // event.preventDefault();
+    submit(this.userForm, async () => {
+      try {
+        this.userForm().reset();
+        return undefined;
+      } catch (error) {
+        return [
+          {
+            kind: 'server',
+            field: this.userForm.firstName,
+            message: (error as Error).message,
+          },
+        ];
+      }
+    });
+  }
+
+  // onSubmit() {
+  //   submit(this.userForm, async (form) => {
+  //     try {
+  //       this.userProfileService.saveForm(form); // call to API to save our form data
+  //       this.userForm().reset();
+  //       return undefined;
+  //     }
+  //   });
+  // }
 }
