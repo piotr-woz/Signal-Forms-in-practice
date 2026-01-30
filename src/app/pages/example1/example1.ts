@@ -1,4 +1,4 @@
-import { Component, signal, computed, ChangeDetectionStrategy } from '@angular/core';
+import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
 import {
   form,
   FormField,
@@ -54,11 +54,13 @@ export default class Example1 {
     confirmPassword: '',
   });
 
+  // Reusable schema for first name and last name fields
   private readonly _profileSchema: Schema<string> = schema((path) => {
     required(path, { message: 'This is a required field.' });
     minLength(path, 3, { message: 'This needs to be more than three characters' });
   });
 
+  // Custom validator to allow only numeric input
   private numericOnly(path: any, options?: { message?: string }): void {
     validate(path, ({ value }) => {
       if (!/^\d+$/.test(String(value()))) {
@@ -88,6 +90,13 @@ export default class Example1 {
           return { message: 'Password must contain at least one number.', kind: 'password' };
         }
         return null;
+      }),
+      // Confirm password must match password
+      validate(path.confirmPassword, ({ value, valueOf }) => {
+        if (value() !== valueOf(path.password)) {
+          return { message: 'Passwords do not match.', kind: 'confirmPassword' };
+        }
+        return null;
       }));
   });
 
@@ -98,6 +107,7 @@ export default class Example1 {
         this.userForm().reset();
         return undefined;
       } catch (error) {
+        // Simulate server error for first name field
         return [
           {
             kind: 'server',
