@@ -86,13 +86,22 @@ export default class Example1 {
         message: 'This is a required field.',
       }),
       email(path.email, { message: 'The email address is not valid.' }),
-      // Password must contain at least one number
+      // Password must contain at least one number and one special character
       validate(path.password, ({ value }) => {
-        if (!/\d/.test(String(value()))) {
+        const password = String(value());
+        if (!/\d/.test(password)) {
           return { message: 'Password must contain at least one number.', kind: 'password' };
+        }
+        if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+          return {
+            message: 'Password must contain at least one special character.',
+            kind: 'password',
+          };
         }
         return null;
       }),
+      // Password must be at least 8 characters long
+      minLength(path.password, 8, { message: 'Password must be at least 8 characters long.' }),
       // Confirm password must match password
       validate(path.confirmPassword, ({ value, valueOf }) => {
         if (value() !== valueOf(path.password)) {
