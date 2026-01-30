@@ -61,7 +61,7 @@ export default class Example1 {
 
   private numericOnly(path: any, options?: { message?: string }): void {
     validate(path, ({ value }) => {
-      if (!/^\d+$/.test(String(value))) {
+      if (!/^\d+$/.test(String(value()))) {
         return {
           message: options?.message || 'This input must contain only numbers.',
           kind: 'phone',
@@ -81,14 +81,14 @@ export default class Example1 {
         when: ({ valueOf }) => valueOf(path.emailMarketing) === true,
         message: 'This is a required field.',
       }),
-      email(path.email, { message: 'The email address is not valid.' }));
-
-    validate(path.password, ({ value }) => {
-      if (!/\d/.test(String(value))) {
-        return { message: 'Password must contain at least one number.', kind: 'password' };
-      }
-      return null;
-    });
+      email(path.email, { message: 'The email address is not valid.' }),
+      // Password must contain at least one number
+      validate(path.password, ({ value }) => {
+        if (!/\d/.test(String(value()))) {
+          return { message: 'Password must contain at least one number.', kind: 'password' };
+        }
+        return null;
+      }));
   });
 
   onSubmit() {

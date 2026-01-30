@@ -35,9 +35,9 @@
         <mat-form-field appearance="fill" class="w-full mb-1">
           <mat-label for="firstName">First name</mat-label>
           <input [formField]="userForm.firstName" id="firstName" matInput type="text" placeholder="First name" />
-          @if(userForm.firstName().errors().length > 0) {
+          @if(userForm.firstName().invalid() && userForm.firstName().touched()) {
           <mat-error>
-            @for(error of userForm.firstName().errors(); track error) {
+            @for(error of userForm.firstName().errors(); track error.kind) {
             <span>{{ error.message }}</span>
             }
           </mat-error>
@@ -47,9 +47,9 @@
         <mat-form-field appearance="fill" class="w-full mb-1">
           <mat-label for="lastName">Last name</mat-label>
           <input [formField]="userForm.lastName" id="lastName" matInput type="text" placeholder="Last name" />
-          @if(userForm.lastName().errors().length > 0) {
+          @if(userForm.lastName().invalid() && userForm.lastName().touched()) {
           <mat-error>
-            @for(error of userForm.lastName().errors(); track error) {
+            @for(error of userForm.lastName().errors(); track error.kind) {
             <span>{{ error.message }}</span>
             }
           </mat-error>
@@ -59,9 +59,9 @@
         <mat-form-field appearance="fill" class="w-full mb-1">
           <mat-label for="phone">Phone number</mat-label>
           <input [formField]="userForm.phone" id="phone" matInput type="text" placeholder="Phone number" />
-          @if(userForm.phone().errors().length > 0) {
+          @if(userForm.phone().invalid() && userForm.phone().touched()) {
           <mat-error>
-            @for(error of userForm.phone().errors(); track error) {
+            @for(error of userForm.phone().errors(); track error.kind) {
             <span>{{ error.message }}</span>
             }
           </mat-error>
@@ -71,9 +71,9 @@
         <mat-form-field appearance="fill" class="w-full mb-1">
           <mat-label for="email">Email address</mat-label>
           <input [formField]="userForm.email" id="email" matInput type="email" placeholder="Email" />
-          @if(userForm.email().errors().length > 0) {
+          @if(userForm.email().invalid() && userForm.email().touched()) {
           <mat-error>
-            @for(error of userForm.email().errors(); track error) {
+            @for(error of userForm.email().errors(); track error.kind) {
             <span>{{ error.message }}</span>
             }
           </mat-error>
@@ -85,9 +85,9 @@
         <mat-form-field appearance="fill" class="w-full mb-1 mt-2">
           <mat-label for="password">Password</mat-label>
           <input [formField]="userForm.password" id="password" matInput type="password" placeholder="Password" />
-          @if(userForm.password().errors().length > 0) {
+          @if(userForm.password().invalid() && userForm.password().touched()) {
           <mat-error>
-            @for(error of userForm.password().errors(); track error) {
+            @for(error of userForm.password().errors(); track error.kind) {
             <span>{{ error.message }}</span>
             }
           </mat-error>
@@ -98,9 +98,9 @@
           <mat-label for="confirmPassword">Confirm Password</mat-label>
           <input [formField]="userForm.confirmPassword" id="confirmPassword" matInput type="password"
             placeholder="Confirm Password" />
-          @if(userForm.confirmPassword().errors().length > 0) {
+          @if(userForm.confirmPassword().invalid() && userForm.confirmPassword().touched()) {
           <mat-error>
-            @for(error of userForm.confirmPassword().errors(); track error) {
+            @for(error of userForm.confirmPassword().errors(); track error.kind) {
             <span>{{ error.message }}</span>
             }
           </mat-error>
