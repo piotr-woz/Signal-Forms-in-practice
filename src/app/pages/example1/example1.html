@@ -31,53 +31,61 @@
 
   <div class="px-6 pt-26 pb-8">
     <mat-card appearance="outlined" class="relative z-10 max-w-xl mx-auto p-8 bg-[#445469]!">
-      <mat-form-field appearance="fill" class="w-full mb-1">
-        <mat-label for="firstName">First name</mat-label>
-        <input [formField]="userForm.firstName" id="firstName" matInput type="text" placeholder="First name" />
-        @if(userForm.firstName().errors().length > 0) {
-        <mat-error>
-          @for(error of userForm.firstName().errors(); track error) {
-          <span>{{ error.message }}</span>
+      <form>
+        <mat-form-field appearance="fill" class="w-full mb-1">
+          <mat-label for="firstName">First name</mat-label>
+          <input [formField]="userForm.firstName" id="firstName" matInput type="text" placeholder="First name" />
+          @if(userForm.firstName().errors().length > 0) {
+          <mat-error>
+            @for(error of userForm.firstName().errors(); track error) {
+            <span>{{ error.message }}</span>
+            }
+          </mat-error>
           }
-        </mat-error>
-        }
-      </mat-form-field>
+        </mat-form-field>
 
-      <mat-form-field appearance="fill" class="w-full mb-1">
-        <mat-label for="lastName">Last name</mat-label>
-        <input [formField]="userForm.lastName" id="lastName" matInput type="text" placeholder="Last name" />
-        @if(userForm.lastName().errors().length > 0) {
-        <mat-error>
-          @for(error of userForm.lastName().errors(); track error) {
-          <span>{{ error.message }}</span>
+        <mat-form-field appearance="fill" class="w-full mb-1">
+          <mat-label for="lastName">Last name</mat-label>
+          <input [formField]="userForm.lastName" id="lastName" matInput type="text" placeholder="Last name" />
+          @if(userForm.lastName().errors().length > 0) {
+          <mat-error>
+            @for(error of userForm.lastName().errors(); track error) {
+            <span>{{ error.message }}</span>
+            }
+          </mat-error>
           }
-        </mat-error>
-        }
-      </mat-form-field>
+        </mat-form-field>
 
-      <mat-form-field appearance="fill" class="w-full mb-1">
-        <mat-label for="phone">Phone number</mat-label>
-        <input [formField]="userForm.phone" id="phone" matInput type="text" placeholder="Phone number" />
-        @if(userForm.phone().errors().length > 0) {
-        <mat-error>
-          @for(error of userForm.phone().errors(); track error) {
-          <span>{{ error.message }}</span>
+        <mat-form-field appearance="fill" class="w-full mb-1">
+          <mat-label for="phone">Phone number</mat-label>
+          <input [formField]="userForm.phone" id="phone" matInput type="text" placeholder="Phone number" />
+          @if(userForm.phone().errors().length > 0) {
+          <mat-error>
+            @for(error of userForm.phone().errors(); track error) {
+            <span>{{ error.message }}</span>
+            }
+          </mat-error>
           }
-        </mat-error>
-        }
-      </mat-form-field>
+        </mat-form-field>
 
-      <mat-form-field appearance="fill" class="w-full">
-        <mat-label for="email">Email address</mat-label>
-        <input [formField]="userForm.email" id="email" matInput type="email" placeholder="Email" />
-        @if(userForm.email().errors().length > 0) {
-        <mat-error>
-          @for(error of userForm.email().errors(); track error) {
-          <span>{{ error.message }}</span>
+        <mat-form-field appearance="fill" class="w-full">
+          <mat-label for="email">Email address</mat-label>
+          <input [formField]="userForm.email" id="email" matInput type="email" placeholder="Email" />
+          @if(userForm.email().errors().length > 0) {
+          <mat-error>
+            @for(error of userForm.email().errors(); track error) {
+            <span>{{ error.message }}</span>
+            }
+          </mat-error>
           }
-        </mat-error>
-        }
-      </mat-form-field>
+        </mat-form-field>
+
+        <div class="flex justify-end">
+          <button matButton="tonal" class="mt-4" type="submit" [disabled]="!isFormValid()">
+            Submit
+          </button>
+        </div>
+      </form>
     </mat-card>
   </div>
 </div>
