@@ -111,24 +111,43 @@ export default class Example1 {
       }));
   });
 
+  // constructor() {
+  //   this.userForm.firstName().value.set('Peter');
+  // }
+
   protected onSubmit() {
-    // event.preventDefault();
-    submit(this.userForm, async () => {
+    submit(this.userForm, async (form) => {
+      // async logic that returns a Promise of either undefined (success) or array of errors
       try {
-        this.userForm().reset();
+        form().reset();
+        // throw Error('Simulated server error: First name is already taken.');
         return undefined;
       } catch (error) {
-        // Simulate server error for first name field
+        // simulate server error for first name field
         return [
           {
             kind: 'server',
-            field: this.userForm.firstName,
+            field: form.firstName,
             message: (error as Error).message,
           },
         ];
       }
     });
   }
+
+  // protected onSubmit(event: Event) {
+  //   submit(this.userForm, async (form) => {
+  //     try {
+  //       await fetch('https://api.example.com/user-profile', {
+  //         method: 'PUT',
+  //         body: JSON.stringify(form().value()),
+  //       });
+  //       form().reset();
+  //       return undefined;
+  //       event.preventDefault();
+  //     }
+  //   });
+  // }
 
   // protected onSubmit() {
   //   submit(this.userForm, async (form) => {
