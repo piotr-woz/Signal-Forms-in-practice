@@ -1,7 +1,7 @@
 {
-  "arrowParens": "avoid",
+  "arrowParens": "always",
   "bracketSpacing": true,
-  "bracketSameLine": false,
+  "bracketSameLine": true,
   "htmlWhitespaceSensitivity": "ignore",
   "insertPragma": false,
   "printWidth": 100,
@@ -11,8 +11,9 @@
   "semi": true,
   "singleQuote": true,
   "tabWidth": 2,
-  "trailingComma": "none",
+  "trailingComma": "all",
   "useTabs": false,
+  "singleAttributePerLine": true,
   "overrides": [
     {
       "files": "*.json",
