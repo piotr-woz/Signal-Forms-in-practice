@@ -18,6 +18,7 @@ import { MatButton } from '@angular/material/button';
 import { MatCheckbox } from '@angular/material/checkbox';
 import { RouterLink } from '@angular/router';
 import { Header } from '../../shared/components/header/header';
+import { FormError } from './form-error/form-error';
 
 interface UserProfile {
   firstName: string;
@@ -40,6 +41,7 @@ interface UserProfile {
     FormField,
     RouterLink,
     Header,
+    FormError,
   ],
   templateUrl: './example1.html',
   styles: ``,
