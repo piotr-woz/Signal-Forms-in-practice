@@ -6,7 +6,6 @@ import { Header } from '../../shared/components/header/header';
   selector: 'app-example2',
   imports: [RouterLink, Header],
   templateUrl: './example2.html',
-  styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class Example2 {}

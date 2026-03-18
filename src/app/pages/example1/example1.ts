@@ -10,6 +10,7 @@ import {
   apply,
   validate,
   submit,
+  SchemaPath,
 } from '@angular/forms/signals';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -20,7 +21,7 @@ import { RouterLink } from '@angular/router';
 import { Header } from '../../shared/components/header/header';
 import { FormError } from './form-error/form-error';
 
-interface UserProfile {
+interface UserProfileModel {
   firstName: string;
   lastName: string;
   phone: string;
@@ -44,11 +45,10 @@ interface UserProfile {
     FormError,
   ],
   templateUrl: './example1.html',
-  styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class Example1 {
-  protected readonly userProfile = signal<UserProfile>({
+  protected readonly userProfile = signal<UserProfileModel>({
     firstName: '',
     lastName: '',
     phone: '',
@@ -65,80 +65,102 @@ export default class Example1 {
   });
 
   // Custom validator to allow only numeric input
-  private numericOnly(path: any, options?: { message?: string }): void {
+  private numericOnly(path: SchemaPath<string>, options?: { message?: string }): void {
     validate(path, ({ value }) => {
-      if (!/^\d+$/.test(String(value()))) {
-        return {
-          message: options?.message || 'This input must contain only numbers.',
-          kind: 'phone',
-        };
-      }
-      return null;
+      const phoneNumber = value();
+      if (!phoneNumber) return null;
+
+      const isValid = /^\d+$/.test(phoneNumber);
+      return isValid
+        ? null
+        : {
+            message: options?.message || 'This input must contain only numbers.',
+            kind: 'phone',
+          };
     });
   }
 
   protected readonly userForm = form(this.userProfile, (path) => {
+    /* firstName and lastName validation */
     (apply(path.firstName, this._profileSchema),
       apply(path.lastName, this._profileSchema),
-      // Phone number must contain only numbers
+      /* phone validation */
+      // phone number must contain only numbers
       this.numericOnly(path.phone, { message: 'The phone number must contain only numbers.' }),
-      // Email is required only if email marketing is checked
+      /* email validation */
+      // email is required only if email marketing is checked
       required(path.email, {
         when: ({ valueOf }) => valueOf(path.emailMarketing) === true,
         message: 'This is a required field.',
       }),
       email(path.email, { message: 'The email address is not valid.' }),
-      // Password must contain at least one number and one special character
+      /* password validation */
+      // password must contain at least one number and one special character (custom validator)
       validate(path.password, ({ value }) => {
-        const password = String(value());
-        if (!/\d/.test(password)) {
+        const password = value();
+        if (!password) return null;
+
+        const hasNumber = /\d/.test(password);
+        const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+        const hasUpper = /[A-Z]/.test(password);
+
+        if (!hasNumber) {
           return { message: 'Password must contain at least one number.', kind: 'password' };
         }
-        if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+        if (!hasSpecial) {
           return {
             message: 'Password must contain at least one special character.',
             kind: 'password',
           };
         }
+        if (!hasUpper) {
+          return {
+            message: 'Password must contain at least one uppercase letter.',
+            kind: 'password',
+          };
+        }
+
         return null;
       }),
       // Password must be at least 8 characters long
       minLength(path.password, 8, { message: 'Password must be at least 8 characters long.' }),
-      // Confirm password must match password
+      // Confirm password must match password (custom validator)
       validate(path.confirmPassword, ({ value, valueOf }) => {
-        if (value() !== valueOf(path.password)) {
-          return { message: 'Passwords do not match.', kind: 'confirmPassword' };
-        }
-        return null;
+        return value() !== valueOf(path.password)
+          ? { message: 'Passwords do not match.', kind: 'confirmPassword' }
+          : null;
       }));
   });
 
-  // constructor() {
-  //   this.userForm.firstName().value.set('Peter');
-  // }
+  constructor() {
+    this.userForm.firstName().value.set('Peter');
+    console.log(this.userForm().value());
+  }
 
-  protected onSubmit() {
-    submit(this.userForm, async (form) => {
-      // async logic that returns a Promise of either undefined (success) or array of errors
+  protected async onSubmit() {
+    await submit(this.userForm, async (form) => {
+      // async logic that returns ise of either undefined (success) or array of errors
       try {
+        // await this.userService.saveForm(form().value()); // call to API to save our form data (example)
         form().reset();
-        // throw Error('Simulated server error: First name is already taken.');
         return undefined;
       } catch (error) {
         // simulate server error for first name field
         return [
           {
             kind: 'server',
-            field: form.firstName,
             message: (error as Error).message,
+            field: form.firstName,
           },
         ];
       }
     });
   }
 
-  // protected onSubmit(event: Event) {
-  //   submit(this.userForm, async (form) => {
+  /* with fetch and preventDefault */
+  // protected async onSubmit(event: Event) {
+  //   event.preventDefault();
+  //   await submit(this.userForm, async (form) => {
   //     try {
   //       await fetch('https://api.example.com/user-profile', {
   //         method: 'PUT',
@@ -146,18 +168,28 @@ export default class Example1 {
   //       });
   //       form().reset();
   //       return undefined;
-  //       event.preventDefault();
-  //     }
-  //   });
-  // }
-
-  // protected onSubmit() {
-  //   submit(this.userForm, async (form) => {
-  //     try {
-  //       this.userProfileService.saveForm(form); // call to API to save our form data
-  //       this.userForm().reset();
-  //       return undefined;
   //     }
   //   });
   // }
 }
+
+/*
+Built-in validators include:
+
+required(path)
+min(path, minValue)
+max(path, maxValue)
+minLength(path, length)
+maxLength(path, length)
+pattern(path, regex)
+email(path)
+ */
+
+/*
+In custom validation, ctx object gives access to:
+
+ctx.value() - current field value
+ctx.valueOf(path) - value of another field
+ctx.state() - touched/dirty state
+ctx.stateOf(path) - state of another field
+ */

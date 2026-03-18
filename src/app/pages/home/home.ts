@@ -47,7 +47,7 @@ export default class Home {
     },
   ];
 
-  private _dataService = inject(DataService);
+  private readonly _dataService = inject(DataService);
 
   protected onSendExampleData(title: string, origin: string): void {
     this._dataService.setPageData(title, origin);

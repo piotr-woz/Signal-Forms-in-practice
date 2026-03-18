@@ -6,7 +6,6 @@ import { DataService } from '../../services/data.service';
   selector: 'app-header',
   imports: [RouterLink],
   templateUrl: './header.html',
-  styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Header {
