@@ -97,7 +97,7 @@ export default class Example1 {
       }),
       email(path.email, { message: 'The email address is not valid.' }),
       /* password validation */
-      // password must contain at least one number and one special character (custom validator)
+      // password must contain at least one number, one special character and one uppercase letter (custom validator)
       validate(path.password, ({ value }) => {
         const password = value();
         if (!password) return null;
@@ -125,7 +125,10 @@ export default class Example1 {
         return null;
       }),
       // Password must be at least 8 characters long
-      minLength(path.password, 8, { message: 'Password must be at least 8 characters long.' }),
+      minLength(path.password, 8, {
+        message: (password) =>
+          `Password should have at least 8 characters but has only ${password.value().length}`,
+      }),
       // Confirm password must match password (custom validator)
       validate(path.confirmPassword, ({ value, valueOf }) => {
         return value() !== valueOf(path.password)
