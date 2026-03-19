@@ -138,7 +138,8 @@ export default class Example1 {
     console.log(this.userForm().value());
   }
 
-  protected async onSubmit() {
+  protected async onSubmit(event: SubmitEvent) {
+    event.preventDefault();
     await submit(this.userForm, async (form) => {
       // async logic that returns ise of either undefined (success) or array of errors
       try {
@@ -156,10 +157,15 @@ export default class Example1 {
         ];
       }
     });
+    // 👇 automatically focus the first field with an error
+    const firstError = this.userForm().errorSummary()[0];
+    if (firstError?.fieldTree) {
+      firstError.fieldTree().focusBoundControl();
+    }
   }
 
-  /* with fetch and preventDefault */
-  // protected async onSubmit(event: Event) {
+  /* with fetch */
+  // protected async onSubmit(event: SubmitEvent) {
   //   event.preventDefault();
   //   await submit(this.userForm, async (form) => {
   //     try {

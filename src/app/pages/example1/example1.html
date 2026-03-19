@@ -5,7 +5,7 @@
 
   <div class="px-6 pt-26 pb-9">
     <mat-card appearance="outlined" class="relative z-10 max-w-xl mx-auto p-8 bg-[#445469]!">
-      <form (ngSubmit)="onSubmit()">
+      <form (submit)="onSubmit($event)">
         <mat-form-field appearance="fill" class="w-full mb-1">
           <mat-label for="firstName">First name</mat-label>
           <input [formField]="userForm.firstName" id="firstName" matInput type="text" placeholder="First name" />
