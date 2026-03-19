@@ -11,7 +11,6 @@ import {
   validate,
   submit,
   SchemaPath,
-  FieldTree,
 } from '@angular/forms/signals';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -32,6 +31,16 @@ interface UserProfileModel {
   confirmPassword: string;
 }
 
+const userProfileInitialState: UserProfileModel = {
+  firstName: '',
+  lastName: '',
+  phone: '',
+  email: '',
+  emailMarketing: false,
+  password: '',
+  confirmPassword: '',
+};
+
 @Component({
   selector: 'app-example1',
   imports: [
@@ -49,15 +58,7 @@ interface UserProfileModel {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class Example1 {
-  protected readonly userProfile = signal<UserProfileModel>({
-    firstName: '',
-    lastName: '',
-    phone: '',
-    email: '',
-    emailMarketing: false,
-    password: '',
-    confirmPassword: '',
-  });
+  protected readonly userProfile = signal<UserProfileModel>(userProfileInitialState);
 
   // Reusable schema for first name and last name fields
   private readonly _profileSchema: Schema<string> = schema((path) => {
@@ -144,7 +145,7 @@ export default class Example1 {
       // async logic that returns ise of either undefined (success) or array of errors
       try {
         // await this.userService.saveForm(form().value()); // call to API to save our form data (example)
-        form().reset();
+        form().reset(userProfileInitialState);
         return undefined;
       } catch (error) {
         // simulate server error for first name field
@@ -173,7 +174,7 @@ export default class Example1 {
   //         method: 'PUT',
   //         body: JSON.stringify(form().value()),
   //       });
-  //       form().reset();
+  //       form().reset(userProfileInitialState);
   //       return undefined;
   //     }
   //   });
