@@ -1,4 +1,4 @@
-import { Component, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, signal, computed, ChangeDetectionStrategy } from '@angular/core';
 import {
   form,
   FormField,
@@ -138,12 +138,16 @@ export default class Example1 {
   });
 
   constructor() {
-    this.userForm.firstName().value.set('Peter');
-    console.log(this.userForm().value());
+    // this.userForm.firstName().value.set('Peter');
   }
+
+  protected readonly fullName = computed(
+    () => `${this.userProfile().firstName} ${this.userProfile().lastName}`,
+  );
 
   protected async onSubmit(event: SubmitEvent) {
     event.preventDefault();
+    console.log(this.userForm().value());
     await submit(this.userForm, async (form) => {
       // async logic that returns ise of either undefined (success) or array of errors
       try {

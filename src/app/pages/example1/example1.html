@@ -3,8 +3,8 @@
 
   <app-header />
 
-  <div class="px-6 pt-26 pb-9">
-    <mat-card appearance="outlined" class="relative z-10 max-w-xl mx-auto p-8 bg-[#445469]!">
+  <div class="px-6 pt-26 pb-6">
+    <mat-card appearance="outlined" class="relative z-10 max-w-xl mx-auto px-8 py-6 bg-[#445469]!">
       <form (submit)="onSubmit($event)">
         <mat-form-field appearance="fill" class="w-full mb-1">
           <mat-label for="firstName">First name</mat-label>
@@ -45,9 +45,10 @@
           <mat-error app-form-error [control]="userForm.confirmPassword()"></mat-error>
         </mat-form-field>
 
-        <div class="flex justify-end">
-          <button matButton="tonal" class="mt-4" type="submit"
-            [disabled]="userForm().invalid() || userForm().submitting()">
+        <div class="flex justify-between items-center mt-4">
+          <mat-card appearance="outlined" class="w-3/5 px-4 py-2 bg-[#445469]! text-base">Form for
+            {{fullName()}}</mat-card>
+          <button matButton="tonal" type="submit" [disabled]="userForm().invalid() || userForm().submitting()">
             {{userForm().submitting() ? 'Sending...' : 'Submit'}}
           </button>
         </div>
