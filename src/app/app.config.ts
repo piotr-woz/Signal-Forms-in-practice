@@ -5,6 +5,7 @@ import {
   provideCheckNoChangesConfig,
 } from '@angular/core';
 import { provideRouter, withViewTransitions } from '@angular/router';
+import { provideSignalFormsConfig } from '@angular/forms/signals';
 
 import { routes } from './app.routes';
 
@@ -21,5 +22,10 @@ export const appConfig: ApplicationConfig = {
           }),
         ]
       : []),
+    provideSignalFormsConfig({
+      classes: {
+        'is-invalid': (field) => field.state().invalid() && field.state().touched(),
+      },
+    }),
   ],
 };

@@ -11,6 +11,7 @@ import {
   validate,
   submit,
   SchemaPath,
+  FieldTree,
 } from '@angular/forms/signals';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -150,7 +151,7 @@ export default class Example1 {
           {
             kind: 'server',
             message: (error as Error).message,
-            field: form.firstName,
+            fieldTree: form.firstName,
           },
         ];
       }
@@ -181,7 +182,7 @@ min(path, minValue)
 max(path, maxValue)
 minLength(path, length)
 maxLength(path, length)
-pattern(path, regex)
+pattern(path, regex) ...for example pattern(path.zip, new RegExp("[0-9]{5}"))
 email(path)
  */
 
@@ -192,4 +193,16 @@ ctx.value() - current field value
 ctx.valueOf(path) - value of another field
 ctx.state() - touched/dirty state
 ctx.stateOf(path) - state of another field
+ */
+
+/*
+We can access all individual fields from our form:
+  this.userForm.firstName().value.set("Peter");
+
+We can access the state of individual fields, such as valid / pristine / touched / disabled / errors, and more:
+  this.userForm.phone().dirty();
+
+And we can also acccess that information on the entire form
+  this.userForm().value(); // returns the entire form value
+  this.userForm().valid(); // returns true or false
  */

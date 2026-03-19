@@ -1,1 +1,5 @@
 @import 'tailwindcss';
+
+.is-invalid {
+  color: #ba1a1a !important;
+}
