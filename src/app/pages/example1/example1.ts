@@ -63,7 +63,10 @@ export default class Example1 {
   // Reusable schema for first name and last name fields
   private readonly _profileSchema: Schema<string> = schema((path) => {
     required(path, { message: 'This is a required field.' });
-    minLength(path, 3, { message: 'This needs to be more than three characters' });
+    minLength(path, 3, {
+      message: (input) =>
+        `This needs to be more than three characters but has only ${input.value().length}`,
+    });
   });
 
   // Custom validator to allow only numeric input
