@@ -4,13 +4,10 @@ import {
   FormField,
   required,
   email,
-  Schema,
-  schema,
   minLength,
   apply,
   validate,
   submit,
-  SchemaPath,
 } from '@angular/forms/signals';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -21,25 +18,10 @@ import { RouterLink } from '@angular/router';
 import { Header } from '../../shared/components/header/header';
 import { FormError } from './form-error/form-error';
 
-interface UserProfileModel {
-  firstName: string;
-  lastName: string;
-  phone: string;
-  email: string;
-  emailMarketing: boolean;
-  password: string;
-  confirmPassword: string;
-}
-
-const userProfileInitialState: UserProfileModel = {
-  firstName: '',
-  lastName: '',
-  phone: '',
-  email: '',
-  emailMarketing: false,
-  password: '',
-  confirmPassword: '',
-};
+import { UserProfile } from './user-profile';
+import { userProfileInitialState } from './user-profile';
+import { userProfileSchema } from './user-profile';
+import { numericOnly } from './user-profile';
 
 @Component({
   selector: 'app-example1',
@@ -58,48 +40,23 @@ const userProfileInitialState: UserProfileModel = {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class Example1 {
-  protected readonly userProfile = signal<UserProfileModel>(userProfileInitialState);
-
-  // Reusable schema for first name and last name fields
-  private readonly _profileSchema: Schema<string> = schema((path) => {
-    required(path, { message: 'This is a required field.' });
-    minLength(path, 3, {
-      message: (input) =>
-        `This needs to be more than three characters but has only ${input.value().length}`,
-    });
-  });
-
-  // Custom validator to allow only numeric input
-  private numericOnly(path: SchemaPath<string>, options?: { message?: string }): void {
-    validate(path, ({ value }) => {
-      const phoneNumber = value();
-      if (!phoneNumber) return null;
-
-      const isValid = /^\d+$/.test(phoneNumber);
-      return isValid
-        ? null
-        : {
-            message: options?.message || 'This input must contain only numbers.',
-            kind: 'phone',
-          };
-    });
-  }
+  protected readonly userProfile = signal<UserProfile>(userProfileInitialState);
 
   protected readonly userForm = form(this.userProfile, (path) => {
-    /* firstName and lastName validation */
-    (apply(path.firstName, this._profileSchema),
-      apply(path.lastName, this._profileSchema),
-      /* phone validation */
+    /* FirstName and lastName validation */
+    (apply(path.firstName, userProfileSchema),
+      apply(path.lastName, userProfileSchema),
+      /* Phone validation */
       // phone number must contain only numbers
-      this.numericOnly(path.phone, { message: 'The phone number must contain only numbers.' }),
-      /* email validation */
+      numericOnly(path.phone, 'phone', { message: 'The phone number must contain only numbers.' }),
+      /* Email validation */
       // email is required only if email marketing is checked
       required(path.email, {
         when: ({ valueOf }) => valueOf(path.emailMarketing) === true,
         message: 'This is a required field.',
       }),
       email(path.email, { message: 'The email address is not valid.' }),
-      /* password validation */
+      /* Password validation */
       // password must contain at least one number, one special character and one uppercase letter (custom validator)
       validate(path.password, ({ value }) => {
         const password = value();
@@ -127,12 +84,12 @@ export default class Example1 {
 
         return null;
       }),
-      // Password must be at least 8 characters long
+      // password must be at least 8 characters long
       minLength(path.password, 8, {
         message: (password) =>
           `Password should have at least 8 characters but has only ${password.value().length}`,
       }),
-      // Confirm password must match password (custom validator)
+      // confirm password must match password (custom validator)
       validate(path.confirmPassword, ({ value, valueOf }) => {
         return value() !== valueOf(path.password)
           ? { message: 'Passwords do not match.', kind: 'confirmPassword' }
@@ -175,7 +132,7 @@ export default class Example1 {
     }
   }
 
-  /* with fetch */
+  /* With fetch */
   // protected async onSubmit(event: SubmitEvent) {
   //   event.preventDefault();
   //   await submit(this.userForm, async (form) => {
@@ -193,23 +150,21 @@ export default class Example1 {
 
 /*
 Built-in validators include:
-
-required(path)
-min(path, minValue)
-max(path, maxValue)
-minLength(path, length)
-maxLength(path, length)
-pattern(path, regex) ...for example pattern(path.zip, new RegExp("[0-9]{5}"))
-email(path)
+  required(path)
+  min(path, minValue)
+  max(path, maxValue)
+  minLength(path, length)
+  maxLength(path, length)
+  pattern(path, regex) ...for example pattern(path.zip, /[0-9]{5}/)
+  email(path)
  */
 
 /*
 In custom validation, ctx object gives access to:
-
-ctx.value() - current field value
-ctx.valueOf(path) - value of another field
-ctx.state() - touched/dirty state
-ctx.stateOf(path) - state of another field
+  ctx.value() - current field value
+  ctx.valueOf(path) - value of another field
+  ctx.state() - touched/dirty state
+  ctx.stateOf(path) - state of another field
  */
 
 /*

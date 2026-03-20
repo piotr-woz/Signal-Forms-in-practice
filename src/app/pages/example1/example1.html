@@ -5,7 +5,7 @@
 
   <div class="px-6 pt-26 pb-6">
     <mat-card appearance="outlined" class="relative z-10 max-w-xl mx-auto px-8 py-6 bg-[#445469]!">
-      <form (submit)="onSubmit($event)">
+      <form (submit)="onSubmit($event)" autocomplete="off" novalidate>
         <mat-form-field appearance="fill" class="w-full mb-1">
           <mat-label for="firstName">First name</mat-label>
           @let fn = userForm.firstName;
