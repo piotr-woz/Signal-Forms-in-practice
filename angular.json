@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "Signal-Forms-in-practice": {
+    "signal-forms-in-practice": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -60,10 +60,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "Signal-Forms-in-practice:build:production"
+              "buildTarget": "signal-forms-in-practice:build:production"
             },
             "development": {
-              "buildTarget": "Signal-Forms-in-practice:build:development"
+              "buildTarget": "signal-forms-in-practice:build:development"
             }
           },
           "defaultConfiguration": "development"
