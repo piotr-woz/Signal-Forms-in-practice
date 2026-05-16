@@ -1,8 +1,8 @@
 import { Component, ChangeDetectionStrategy, input } from '@angular/core';
+import { FieldState } from '@angular/forms/signals';
 
 @Component({
   selector: '[app-form-error]',
-  imports: [],
   template: `
     @for (error of control().errors(); track error.kind) {
       <span>{{ error.message }}</span>
@@ -11,5 +11,5 @@ import { Component, ChangeDetectionStrategy, input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormError {
-  public readonly control = input.required<any>();
+  public readonly control = input.required<FieldState<unknown>>();
 }

@@ -1,4 +1,4 @@
-import { Component, signal, computed, ChangeDetectionStrategy } from '@angular/core';
+import { Component, signal, computed, ChangeDetectionStrategy, effect } from '@angular/core';
 import {
   form,
   FormField,
@@ -99,8 +99,10 @@ export default class Example1 {
 
   constructor() {
     // this.userForm.firstName().value.set('Peter');
+    // effect(() => {
+    //   console.log(this.userForm.firstName().value());
+    // });
   }
-
   protected readonly fullName = computed(
     () => `${this.userProfile().firstName} ${this.userProfile().lastName}`,
   );
