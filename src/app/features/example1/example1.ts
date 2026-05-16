@@ -8,6 +8,8 @@ import {
   apply,
   validate,
   submit,
+  validateTree,
+  hidden,
 } from '@angular/forms/signals';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -95,6 +97,11 @@ export default class Example1 {
         message: (password) =>
           `Password should have at least 8 characters but has only ${password.value().length}`,
       }),
+      /* --------------------------------------------------------------------------- */
+
+      /* Confirm password validation */
+      // confirm password field is hidden if password is empty
+      hidden(path.confirmPassword, ({ valueOf }) => valueOf(path.password) === ''),
       // confirm password must match password (custom validator)
       validate(
         path.confirmPassword,
@@ -104,6 +111,23 @@ export default class Example1 {
             : { message: 'Passwords do not match.', kind: 'confirmPassword' };
         },
       ));
+
+    // validateTree(path, ({ value, fieldTreeOf }) => {
+    //   return value().confirmPassword === value().password
+    //     ? null
+    //     : [
+    //         {
+    //           message: 'Passwords do not match.',
+    //           kind: 'confirmPassword',
+    //           fieldTree: fieldTreeOf(path.confirmPassword),
+    //         },
+    //         {
+    //           message: 'Passwords do not match.',
+    //           kind: 'confirmPassword',
+    //           fieldTree: fieldTreeOf(path.password),
+    //         },
+    //       ];
+    // })
   });
 
   constructor() {

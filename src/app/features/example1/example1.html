@@ -44,12 +44,14 @@
           <mat-error app-form-error [control]="pw()"></mat-error>
         </mat-form-field>
 
+        @if (!userForm.confirmPassword().hidden() && userForm.password().valid()) {
         <mat-form-field appearance="fill" class="w-full mb-1">
           <mat-label for="confirmPassword">Confirm Password</mat-label>
           @let cpw = userForm.confirmPassword;
           <input [formField]="cpw" id="confirmPassword" matInput type="password" placeholder="Confirm Password" />
           <mat-error app-form-error [control]="cpw()"></mat-error>
         </mat-form-field>
+        }
 
         <div class="flex justify-between items-center mt-4">
           <mat-card appearance="outlined" class="w-3/5 px-4 py-2 bg-[#445469]! text-base">Signal Form for:
